@@ -1,0 +1,12 @@
+/var/log/mcelog {
+    dateext
+    maxage 365
+    rotate 99
+    notifempty
+    missingok
+    copytruncate
+    postrotate
+		chmod 644 /var/log/mcelog
+    endscript
+}
+
