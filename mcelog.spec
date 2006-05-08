@@ -52,6 +52,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGES README
 %attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) /etc/cron.d/mcelog
+%attr(640,root,root) /etc/cron.d/mcelog
 %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/mcelog
 %{_mandir}/man8/mcelog.8*
