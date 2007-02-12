@@ -1,5 +1,5 @@
 Summary:	x86-64 Machine Check Exceptions collector and decoder
-Summary(pl):	Narzêdzie do zbierania i dekodowania wyj±tków MCE na platformie x86-64
+Summary(pl.UTF-8):   NarzÄ™dzie do zbierania i dekodowania wyjÄ…tkÃ³w MCE na platformie x86-64
 Name:		mcelog
 Version:	0.7
 Release:	0.1
@@ -28,18 +28,18 @@ collect and decode those events; it will log the decoded MCE events
 into /var/log/mcelog. Currently, mcelog can decode MCE from AMD K8 and
 Intel P4 (including Xeon) processors.
 
-%description -l pl
-mcelog dekoduje zdarzenia Machine Check Exception (b³êdy sprzêtowe) na
-maszynach x86-64 pracuj±cych pod kontrol± 64-bitowego j±dra Linuksa.
+%description -l pl.UTF-8
+mcelog dekoduje zdarzenia Machine Check Exception (bÅ‚Ä™dy sprzÄ™towe) na
+maszynach x86-64 pracujÄ…cych pod kontrolÄ… 64-bitowego jÄ…dra Linuksa.
 
-Pocz±wszy od wersji 2.6.4 j±dro Linuksa dla x86-64 ju¿ samodzielnie
-nie dekoduje ani nie loguje niekrytycznych zdarzeñ MCE.
+PoczÄ…wszy od wersji 2.6.4 jÄ…dro Linuksa dla x86-64 juÅ¼ samodzielnie
+nie dekoduje ani nie loguje niekrytycznych zdarzeÅ„ MCE.
 
-Zamiast tego dane MCE s± przechowywane w buforze, który mo¿e byæ
-czytany z przestrzeni u¿ytkownika poprzez urz±dzenie /dev/mcelog. To
-narzêdzie jest potrzebne do zbierania i dekodowania tych zdarzeñ;
+Zamiast tego dane MCE sÄ… przechowywane w buforze, ktÃ³ry moÅ¼e byÄ‡
+czytany z przestrzeni uÅ¼ytkownika poprzez urzÄ…dzenie /dev/mcelog. To
+narzÄ™dzie jest potrzebne do zbierania i dekodowania tych zdarzeÅ„;
 loguje ono zdekodowane zdarzenia MCE do /var/log/mcelog. Aktualnie
-mcelog potrafi dekodowaæ MCE z procesorów AMD K8 i Intel P4 (w tym
+mcelog potrafi dekodowaÄ‡ MCE z procesorÃ³w AMD K8 i Intel P4 (w tym
 Xeon).
 
 %prep
