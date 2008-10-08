@@ -6,7 +6,7 @@
  install: mcelog
 -	cp mcelog ${prefix}/sbin/mcelog
 -	cp mcelog.8 ${prefix}/share/man/man8
-+	cp mcelog $(DESTDIR)${prefix}/sbin/mcelog
++	install mcelog $(DESTDIR)${prefix}/sbin/mcelog
 +	cp mcelog.8 $(DESTDIR)${prefix}/share/man/man8
  ifdef DOCDIR
  	cp ${DOC} ${DOCDIR} 
