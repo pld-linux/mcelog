@@ -1,13 +1,13 @@
---- mcelog-0.7/Makefile~	2006-05-03 09:55:54.000000000 +0300
-+++ mcelog-0.7/Makefile	2006-05-08 15:16:44.419177557 +0300
-@@ -12,8 +12,8 @@
- mcelog.o: mcelog.c mcelog.h dmi.h p4.h k8.h
+--- mcelog-0.8pre/Makefile~	2008-10-08 19:13:28.000000000 +0300
++++ mcelog-0.8pre/Makefile	2008-10-08 19:14:11.788165768 +0300
+@@ -16,8 +16,8 @@
  
- install: mcelog.c
+ # dbquery intentionally not installed by default
+ install: mcelog
 -	cp mcelog ${prefix}/sbin/mcelog
 -	cp mcelog.8 ${prefix}/share/man/man8
-+	install mcelog $(DESTDIR)${prefix}/sbin/mcelog
++	cp mcelog $(DESTDIR)${prefix}/sbin/mcelog
 +	cp mcelog.8 $(DESTDIR)${prefix}/share/man/man8
- 	echo
- 	echo "call mcelog regularly from your crontab"
- 
+ ifdef DOCDIR
+ 	cp ${DOC} ${DOCDIR} 
+ else
