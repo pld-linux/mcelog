@@ -1,15 +1,17 @@
 %define		subver	pre
+%define		rel		3
 Summary:	x86-64 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64
 Name:		mcelog
 Version:	0.8
-Release:	0.%{subver}.2
+Release:	0.%{subver}.%{rel}
 License:	GPL v2
 Group:		Applications/System
 Source0:	ftp://ftp.x86-64.org/pub/linux/tools/mcelog/%{name}-%{version}%{subver}.tar.gz
 # Source0-md5:	97fba9e248f23f12d562b92e90ed77fc
 Source1:	%{name}.logrotate
 Patch0:		%{name}-DESTDIR.patch
+Patch1:		%{name}-FHS.patch
 Requires:	crondaemon
 Requires:	logrotate
 ExclusiveArch:	%{ix86} %{x8664}
@@ -48,6 +50,7 @@ Xeon).
 %prep
 %setup -q -n %{name}-%{version}%{subver}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
@@ -60,7 +63,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,/etc/{logrotate.d,cron.d}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 cat <<'EOF' > $RPM_BUILD_ROOT/etc/cron.d/%{name}
-0 * * * * root /usr/sbin/mcelog --ignorenodev --filter >> /var/log/mcelog
+0 * * * * root %{_sbindir}/mcelog --ignorenodev --filter >> /var/log/mcelog
 EOF
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
