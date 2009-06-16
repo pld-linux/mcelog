@@ -1,5 +1,5 @@
 %define		subver	pre
-%define		rel		3
+%define		rel		4
 Summary:	x86-64 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64
 Name:		mcelog
