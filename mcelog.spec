@@ -1,16 +1,14 @@
-%define		subver	pre
-%define		rel		4
+%define		subver	pre3
 Summary:	x86-64 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64
 Name:		mcelog
-Version:	0.8
-Release:	0.%{subver}.%{rel}
+Version:	1.0
+Release:	0.%{subver}
 License:	GPL v2
 Group:		Applications/System
-Source0:	ftp://ftp.x86-64.org/pub/linux/tools/mcelog/%{name}-%{version}%{subver}.tar.gz
-# Source0-md5:	97fba9e248f23f12d562b92e90ed77fc
+Source0:	http://www.kernel.org/pub/linux/utils/cpu/mce/%{name}-%{version}%{subver}.tar.gz
+# Source0-md5:	b42f2214de6f4feb992556149edc67fa
 Source1:	%{name}.logrotate
-Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-FHS.patch
 Requires:	crondaemon
 Requires:	logrotate
@@ -49,7 +47,6 @@ Xeon).
 
 %prep
 %setup -q -n %{name}-%{version}%{subver}
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -59,25 +56,29 @@ Xeon).
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8,/etc/{logrotate.d,cron.d},/var/log}
+install -d $RPM_BUILD_ROOT{/etc/{cron,logrotate}.d,/var/log,%{statdir}}
+
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	prefix=$RPM_BUILD_ROOT/%{_prefix} \
+	etcprefix=$RPM_BUILD_ROOT
+
 cat <<'EOF' > $RPM_BUILD_ROOT/etc/cron.d/%{name}
 0 * * * * root %{_sbindir}/mcelog --ignorenodev --filter >> /var/log/mcelog
 EOF
+
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
-install -d $RPM_BUILD_ROOT%{statdir}
-touch $RPM_BUILD_ROOT%{statdir}/memory-errors
+:> $RPM_BUILD_ROOT%{statdir}/memory-errors
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES README TODO
+%doc CHANGES README TODO TODO-diskdb mce.pdf
 %attr(755,root,root) %{_sbindir}/mcelog
 %attr(640,root,root) /etc/cron.d/mcelog
 %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/mcelog
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}
 %attr(640,root,root) %ghost %{statdir}/memory-errors
 %{_mandir}/man8/mcelog.8*

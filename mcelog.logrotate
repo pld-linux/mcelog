@@ -9,4 +9,3 @@
 		chmod 644 /var/log/mcelog
     endscript
 }
-

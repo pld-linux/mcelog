@@ -1,11 +1,11 @@
---- mcelog-0.8pre/mcelog.c~	2007-01-09 13:57:26.000000000 +0200
-+++ mcelog-0.8pre/mcelog.c	2008-10-08 19:16:07.114831791 +0300
-@@ -37,7 +37,7 @@
- enum cputype cpu = CPU_GENERIC;	
+--- mcelog-1.0pre3/paths.h.orig	2010-01-21 03:36:52.000000000 +0100
++++ mcelog-1.0pre3/paths.h	2010-02-01 22:38:22.000000000 +0100
+@@ -1,7 +1,7 @@
+ #define PREFIX ""
  
- char *logfn = "/dev/mcelog";
--char *dimm_db_fn = "/var/lib/memory-errors"; 
-+char *dimm_db_fn = "/var/lib/misc/memory-errors"; 
+ #define LOG_DEV_FILENAME "/dev/mcelog"
+-#define DIMM_DB_FILENAME PREFIX "/var/lib/memory-errors"
++#define DIMM_DB_FILENAME PREFIX "/var/lib/misc/memory-errors"
+ #define CONFIG_FILENAME PREFIX "/etc/mcelog/mcelog.conf"
  
- int use_syslog;
- int do_dmi;
+ #define SOCKET_PATH "/var/run/mcelog-client"
