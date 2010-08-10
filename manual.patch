@@ -1,5 +1,5 @@
---- mcelog-1.0pre3/mcelog.8~	2010-08-10 12:47:08.000000000 +0300
-+++ mcelog-1.0pre3/mcelog.8	2010-08-10 12:47:10.342360355 +0300
+--- mcelog-1.0pre3/mcelog.8	2010-08-10 12:47:10.342360355 +0300
++++ mcelog-1.0pre3/mcelog.8	2010-08-10 12:48:29.041936982 +0300
 @@ -45,7 +45,7 @@
  Optionally it can also take more options like keeping statistics or
  triggering shell scripts on specific events.
@@ -9,3 +9,21 @@
  as a regular cron job (traditional way, deprecated), 
  running as a trigger directly executed by the kernel, 
  or running as a daemon with the
+@@ -172,7 +172,7 @@
+ .B \-\-config-file file
+ option mcelog reads the specified config file.
+ Default is 
+-.I /etc/mcelog.conf
++.I /etc/mcelog/mcelog.conf
+ See also 
+ .I CONFIG FILE
+ below.
+@@ -245,7 +245,7 @@
+ .SH CONFIG FILE
+ mcelog supports a config file to set defaults. Command line options override
+ the config file. By default the config file is read from
+-.I /etc/mcelog.conf
++.I /etc/mcelog/mcelog.conf
+ unless overridden with the 
+ .I --config-file
+ option.
