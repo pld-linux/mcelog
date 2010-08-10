@@ -31,7 +31,7 @@ MCELOG_OPTIONS=""
 [ -f /etc/sysconfig/mcelog ] && . /etc/sysconfig/mcelog
 
 # private settings
-# TODO: what about other cpu's?
+# sysfs "trigger" file present in each cpu dir is really shared for all cpus
 TRIGGER=/sys/devices/system/machinecheck/machinecheck0/trigger
 
 # configtest itself
