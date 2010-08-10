@@ -1,0 +1,187 @@
+#!/bin/sh
+#
+# mcelog	mcelog hardware error logging
+#
+# chkconfig:	35 02 98
+#
+# description:	Start the mcelog hardware error logging. \
+#               This logs and handles CPU hardware errors on x86 systems.
+#
+# processname:	mcelog
+# config:
+# pidfile:
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# mcelog mode
+# valid values: daemon, trigger, cron
+# Recommended value daemon
+MCELOG_MODE=daemon
+
+# additional options to pass to the daemon
+# this only works in daemon mode
+# see the manpage for details. settings can be also
+# set in /etc/mcelog/mcelog.conf
+MCELOG_OPTIONS=""
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/mcelog ] && . /etc/sysconfig/mcelog
+
+# private settings
+# TODO: what about other cpu's?
+TRIGGER=/sys/devices/system/machinecheck/machinecheck0/trigger
+
+# configtest itself
+# must return non-zero if check failed
+# output is discarded if checkconfig is ran without details
+configtest() {
+	if [ ! -r /dev/mcelog ]; then
+	   	nls "%s not active" /dev/mcelog
+		return 1
+	fi
+
+	case "$MCELOG_MODE" in
+	daemon)
+		;;
+	trigger)
+		if [ ! -f "$TRIGGER" ] ; then
+			nls "No machine check capability"
+			return 1
+		fi
+		;;
+	cron)
+		nls "mcelog not started in cron mode"
+		return 0
+		;;
+	*)
+		nls "Unknown mcelog mode %s. Valid are: daemon/trigger/cron" $MCELOG_MODE
+		return 1
+	esac
+
+	return 0
+}
+
+# wrapper for configtest
+checkconfig() {
+	local details=${1:-0}
+
+	if [ $details = 1 ]; then
+		# run config test and display report (status action)
+		show "Checking %s configuration" "MCE Log"; busy
+		local out
+		out=$(configtest 2>&1)
+		RETVAL=$?
+		if [ $RETVAL = 0 ]; then
+			ok
+		else
+			fail
+		fi
+		[ "$out" ] && echo >&2 "$out"
+	else
+		# run config test and abort with nice message if failed
+		# (for actions checking status before action).
+		configtest >/dev/null 2>&1
+		RETVAL=$?
+		if [ $RETVAL != 0 ]; then
+			show "Checking %s configuration" "MCE Log"; fail
+			nls 'Configuration test failed. See details with %s "checkconfig"' $0
+			exit $RETVAL
+		fi
+	fi
+}
+
+start() {
+	# Check if the service is already running?
+	if [ -f /var/lock/subsys/mcelog ]; then
+		msg_already_running "MCE Log"
+		return
+	fi
+
+	checkconfig
+
+	case "$MCELOG_MODE" in
+	daemon)
+		msg_starting "MCE Log"
+		daemon /usr/sbin/mcelog --daemon $MCELOG_OPTIONS
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mcelog
+		;;
+	trigger)
+		echo $MCELOG > "$TRIGGER"
+		touch /var/lock/subsys/mcelog
+	esac
+}
+
+stop() {
+	if [ ! -f /var/lock/subsys/mcelog ]; then
+		msg_not_running "MCE Log"
+		return
+	fi
+
+	case "$MCELOG_MODE" in
+	daemon)
+		# Stop daemons.
+		msg_stopping "MCE Log"
+		killproc mcelog -TERM
+		rm -f /var/lock/subsys/mcelog
+		;;
+	trigger)
+		echo "" > "$TRIGGER"
+		rm -f /var/lock/subsys/mcelog
+	esac
+}
+
+condrestart() {
+	if [ ! -f /var/lock/subsys/mcelog ]; then
+		msg_not_running "MCE Log"
+		RETVAL=$1
+		return
+	fi
+
+	checkconfig
+	stop
+	start
+}
+
+rc_status() {
+	if [ "$MCELOG_MODE" = "daemon" ] ; then
+		status mcelog
+		RETVAL=$?
+	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	checkconfig
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
+  checkconfig|configtest)
+	checkconfig 1
+	;;
+  status)
+	rc_status
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|checkconfig|status}"
+	exit 3
+esac
+
+exit $RETVAL
