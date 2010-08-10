@@ -1,0 +1,11 @@
+--- mcelog-1.0pre3/mcelog.8~	2010-08-10 12:47:08.000000000 +0300
++++ mcelog-1.0pre3/mcelog.8	2010-08-10 12:47:10.342360355 +0300
+@@ -45,7 +45,7 @@
+ Optionally it can also take more options like keeping statistics or
+ triggering shell scripts on specific events.
+ 
+-The normal operating modi for mcelog are running 
++The normal operating mode for mcelog is running 
+ as a regular cron job (traditional way, deprecated), 
+ running as a trigger directly executed by the kernel, 
+ or running as a daemon with the

@@ -10,6 +10,7 @@ Source0:	http://www.kernel.org/pub/linux/utils/cpu/mce/%{name}-%{version}%{subve
 # Source0-md5:	b42f2214de6f4feb992556149edc67fa
 Source1:	%{name}.logrotate
 Patch1:		%{name}-FHS.patch
+Patch2:		manual.patch
 Requires:	crondaemon
 Requires:	logrotate
 ExclusiveArch:	%{ix86} %{x8664}
@@ -48,6 +49,7 @@ Xeon).
 %prep
 %setup -q -n %{name}-%{version}%{subver}
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} \
