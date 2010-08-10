@@ -13,7 +13,7 @@ Source2:	%{name}.cron
 Patch1:		%{name}-FHS.patch
 Patch2:		manual.patch
 Requires:	crondaemon
-Requires:	logrotate
+Suggests:	logrotate
 ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
