@@ -1,0 +1,1 @@
+*/5 * * * * root /usr/sbin/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1

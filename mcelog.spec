@@ -9,6 +9,7 @@ Group:		Applications/System
 Source0:	http://www.kernel.org/pub/linux/utils/cpu/mce/%{name}-%{version}%{subver}.tar.gz
 # Source0-md5:	b42f2214de6f4feb992556149edc67fa
 Source1:	%{name}.logrotate
+Source2:	%{name}.cron
 Patch1:		%{name}-FHS.patch
 Patch2:		manual.patch
 Requires:	crondaemon
@@ -61,14 +62,11 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{cron,logrotate}.d,/var/log,%{statdir}}
 
 %{__make} install \
-	prefix=$RPM_BUILD_ROOT/%{_prefix} \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	etcprefix=$RPM_BUILD_ROOT
 
-cat <<'EOF' > $RPM_BUILD_ROOT/etc/cron.d/%{name}
-*/5 * * * * root %{_sbindir}/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1
-EOF
-
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/%{name}
+cp -a %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 :> $RPM_BUILD_ROOT%{statdir}/memory-errors
 
