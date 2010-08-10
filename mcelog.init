@@ -112,6 +112,7 @@ start() {
 	trigger)
 		echo $MCELOG > "$TRIGGER"
 		touch /var/lock/subsys/mcelog
+		;;
 	esac
 }
 
@@ -131,6 +132,7 @@ stop() {
 	trigger)
 		echo "" > "$TRIGGER"
 		rm -f /var/lock/subsys/mcelog
+		;;
 	esac
 }
 
@@ -147,10 +149,12 @@ condrestart() {
 }
 
 rc_status() {
-	if [ "$MCELOG_MODE" = "daemon" ] ; then
+	case "$MCELOG_MODE" in
+	daemon)
 		status mcelog
 		RETVAL=$?
-	fi
+		;;
+	esac
 }
 
 RETVAL=0
