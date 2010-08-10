@@ -1,7 +1,7 @@
 # TODO
 # - sync pl
 %define		subver	pre3
-%define		rel		1.1
+%define		rel		2
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
@@ -17,6 +17,7 @@ Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 Patch1:		%{name}-FHS.patch
 Patch2:		manual.patch
+Patch3:		bashism.patch
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -60,6 +61,7 @@ Xeon).
 %setup -q -n %{name}-%{version}%{subver}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} \
