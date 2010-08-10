@@ -104,6 +104,8 @@ fi
 %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/mcelog
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*.conf
-%attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*-trigger
+# do replace on upgrade, in fact, these should be moved to /lib/mcelog as they
+# all support foo.local invocation at the end
+%attr(755,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*-trigger
 %attr(640,root,root) %ghost %{statdir}/memory-errors
 %{_mandir}/man8/mcelog.8*
