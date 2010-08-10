@@ -1,7 +1,7 @@
 # TODO
 # - sync pl
 %define		subver	pre3
-%define		rel		2
+%define		rel		3
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
