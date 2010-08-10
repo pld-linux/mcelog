@@ -1,1 +1,5 @@
-*/5 * * * * root /usr/sbin/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1
+MAILTO=root
+
+# normally disabled, daemon mode is preferred.
+# see /etc/sysconfig/mcelog and mcelog initscript
+#*/5 * * * * root /usr/sbin/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1
