@@ -79,6 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/mcelog
 %attr(640,root,root) /etc/cron.d/mcelog
 %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/mcelog
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*.conf
+%attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*-trigger
 %attr(640,root,root) %ghost %{statdir}/memory-errors
 %{_mandir}/man8/mcelog.8*
