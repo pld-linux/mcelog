@@ -65,7 +65,7 @@ install -d $RPM_BUILD_ROOT{/etc/{cron,logrotate}.d,/var/log,%{statdir}}
 	etcprefix=$RPM_BUILD_ROOT
 
 cat <<'EOF' > $RPM_BUILD_ROOT/etc/cron.d/%{name}
-0 * * * * root %{_sbindir}/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1
+*/5 * * * * root %{_sbindir}/mcelog --ignorenodev --filter >> /var/log/mcelog 2>&1
 EOF
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
