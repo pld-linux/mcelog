@@ -1,0 +1,30 @@
+description "mcelog logs and handles CPU hardware errors on x86 systems."
+
+start on pld.sysinit-done and started SERVICE_syslog=y
+stop on pld.shutdown-started
+console output
+
+# mcelog mode
+# valid values: daemon, trigger, cron
+# Recommended value daemon
+env MCELOG_MODE="daemon"
+
+# additional options to pass to the daemon
+# this only works in daemon mode
+# see the manpage for details. settings can be also
+# set in /etc/mcelog.conf
+env MCELOG_OPTIONS=""
+
+pre-start script
+	# needs mcelog device support
+	modprobe mcelog || :
+	test -c /dev/mcelog
+
+	# this snippet runs only in daemon mode
+	if [ "$MCELOG_MODE" != daemon ]; then
+		exit 1
+	fi
+end script
+
+console output
+exec /usr/sbin/mcelog --foreground --daemon $MCELOG_OPTIONS
