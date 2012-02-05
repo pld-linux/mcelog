@@ -8,8 +8,6 @@
 #               This logs and handles CPU hardware errors on x86 systems.
 #
 # processname:	mcelog
-# config:
-# pidfile:
 #
 # $Id$
 
