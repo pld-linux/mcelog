@@ -1,7 +1,7 @@
 # TODO
 # - sync pl
 %define		subver	pre3
-%define		rel		4
+%define		rel	4
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
@@ -45,18 +45,19 @@ collect and decode those events; it will log the decoded MCE events
 into /var/log/mcelog.
 
 %description -l pl.UTF-8
-mcelog dekoduje zdarzenia Machine Check Exception (błędy sprzętowe) na
-maszynach x86-64 pracujących pod kontrolą 64-bitowego jądra Linuksa.
+mcelog to program do logowania błędów sprzętowych Machine Check
+Exception zgłaszanych przez sprzęt (x86 i x86-64) do jądra. Jądro
+podejmuje natychmiastowe akcje (takie jak odłączanie procesorów), a
+mcelog dekoduje logi tych błędów.
 
-Począwszy od wersji 2.6.4 jądro Linuksa dla x86-64 już samodzielnie
-nie dekoduje ani nie loguje niekrytycznych zdarzeń MCE.
+Począwszy od wersji 2.6.4 dla x86-64 i 2.6.32 dla x86 jądro Linuksa
+już samodzielnie nie dekoduje ani nie loguje niekrytycznych zdarzeń
+MCE - zaleca się uruchamianie mceloga na tych wszystkich maszynach.
 
-Zamiast tego dane MCE są przechowywane w buforze, który może być
-czytany z przestrzeni użytkownika poprzez urządzenie /dev/mcelog. To
-narzędzie jest potrzebne do zbierania i dekodowania tych zdarzeń;
-loguje ono zdekodowane zdarzenia MCE do /var/log/mcelog. Aktualnie
-mcelog potrafi dekodować MCE z procesorów AMD K8 i Intel P4 (w tym
-Xeon).
+Zamiast logowania przez jądro, dane MCE są przechowywane w buforze,
+który może być czytany z przestrzeni użytkownika poprzez urządzenie
+/dev/mcelog. To narzędzie jest potrzebne do zbierania i dekodowania
+tych zdarzeń; loguje ono zdekodowane zdarzenia MCE do /var/log/mcelog.
 
 %prep
 %setup -q -n %{name}-%{version}%{subver}
