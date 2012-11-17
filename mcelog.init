@@ -182,7 +182,7 @@ case "$1" in
 	rc_status
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|checkconfig|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|checkconfig|status}"
 	exit 3
 esac
 
