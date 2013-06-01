@@ -1,25 +1,25 @@
 # TODO
 # - sync pl
-%define		subver	pre3
-%define		rel	4
+%define		snap	20130601
+%define		rel	1
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
 Version:	1.0
-Release:	0.%{subver}.%{rel}
+Release:	0.%{snap}.%{rel}
 License:	GPL v2
 Group:		Applications/System
-Source0:	http://www.kernel.org/pub/linux/utils/cpu/mce/%{name}-%{version}%{subver}.tar.gz
-# Source0-md5:	b42f2214de6f4feb992556149edc67fa
+Source0:	https://github.com/andikleen/mcelog/archive/master.zip
+# Source0-md5:	81f744e778cd170f68d03764633c4a31
 Source1:	%{name}.logrotate
 Source2:	%{name}.cron
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 Patch1:		%{name}-FHS.patch
-Patch2:		manual.patch
-Patch3:		bashism.patch
-URL:		http://www.mcelog.org/
+Patch2:		bashism.patch
+URL:		https://github.com/andikleen/mcelog.git
 BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	unzip
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 Suggests:	crondaemon
@@ -60,10 +60,9 @@ który może być czytany z przestrzeni użytkownika poprzez urządzenie
 tych zdarzeń; loguje ono zdekodowane zdarzenia MCE do /var/log/mcelog.
 
 %prep
-%setup -q -n %{name}-%{version}%{subver}
+%setup -q -n %{name}-master
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__make} \

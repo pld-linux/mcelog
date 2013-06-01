@@ -1,17 +1,18 @@
---- mcelog-1.0pre3/triggers/cache-error-trigger~	2010-01-21 04:36:52.000000000 +0200
-+++ mcelog-1.0pre3/triggers/cache-error-trigger	2010-08-10 13:40:29.531631113 +0300
+diff -urN mcelog-master.org/triggers/cache-error-trigger mcelog-master/triggers/cache-error-trigger
+--- mcelog-master.org/triggers/cache-error-trigger	2013-05-03 01:03:26.000000000 +0200
++++ mcelog-master/triggers/cache-error-trigger	2013-06-01 11:06:34.399817944 +0200
 @@ -1,4 +1,4 @@
 -#!/bin/bash
 +#!/bin/sh
  # cache error trigger. This shell script is executed by mcelog in daemon mode
  # when a CPU reports excessive corrected cache errors. This could be a indication
  # for future uncorrected errors.
-@@ -25,7 +25,7 @@
+@@ -28,7 +28,7 @@
  	logger -s -p daemon.crit -t mcelog "Offlining CPU $i due to cache error threshold"
  	F=$(printf "/sys/devices/system/cpu/cpu%d/online" $i)
  	echo 0 > $F
--	if [ "$(< $F)" != "0" ] then
-+	if [ "$(cat $F)" != "0" ] then
+-	if [ "$(< $F)" != "0" ] ; then
++	if [ "$(cat $F)" != "0" ] ; then
  		logger -s -p daemon.warn -t mcelog "Offlining CPU $i failed"
+ 		EXIT=1
  	fi
- done
