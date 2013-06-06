@@ -1,5 +1,3 @@
-# TODO
-# - sync pl
 %define		subver	20130601
 %define		rel	1
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
