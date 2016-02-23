@@ -1,22 +1,19 @@
-%define		subver	20130601
-%define		rel	1
 Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
-Version:	1.0
-Release:	1.%{subver}.%{rel}
+Version:	132
+Release:	1
 License:	GPL v2
 Group:		Applications/System
-#Source0:	http://www.kernel.org/pub/linux/utils/cpu/mce/%{name}-%{version}%{subver}.tar.gz
-Source0:	https://github.com/andikleen/mcelog/tarball/master/%{name}-%{version}-%{subver}.tgz
-# Source0-md5:	c48d3d3296ad0d5cbdf661e44375ea64
+Source0:	https://github.com/andikleen/mcelog/archive/v%{version}.tar.gz
+# Source0-md5:	0992db4cb9757083d48292aebd751401
 Source1:	%{name}.logrotate
 Source2:	%{name}.cron
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 Patch1:		%{name}-FHS.patch
 Patch2:		bashism.patch
-URL:		https://github.com/andikleen/mcelog.git
+URL:		http://www.mcelog.org/
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -58,15 +55,14 @@ który może być czytany z przestrzeni użytkownika poprzez urządzenie
 tych zdarzeń; loguje ono zdekodowane zdarzenia MCE do /var/log/mcelog.
 
 %prep
-%setup -qc
-mv andikleen-mcelog-*/* .
+%setup -q
 %patch1 -p1
 %patch2 -p1
 
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -fpie -pie"
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -fpie -pie"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -110,4 +106,5 @@ fi
 # all support foo.local invocation at the end
 %attr(755,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/%{name}/*-trigger
 %attr(640,root,root) %ghost %{statdir}/memory-errors
+%{_mandir}/man5/mcelog*.5*
 %{_mandir}/man8/mcelog.8*
