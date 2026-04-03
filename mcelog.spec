@@ -2,7 +2,7 @@ Summary:	x86-64/x86 Machine Check Exceptions collector and decoder
 Summary(pl.UTF-8):	Narzędzie do zbierania i dekodowania wyjątków MCE na platformie x86-64/x86
 Name:		mcelog
 Version:	137
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: https://github.com/andikleen/mcelog/releases
